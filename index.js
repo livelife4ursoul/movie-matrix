@@ -5,9 +5,47 @@ const app = express();
 
 let topMovies = [
     {
-        title: 'Harry Potter',
-        author: 'J.k. Rowling'
+        title: 'Almost Famous',
+        director: 'Cameron Crowe'
+    },
+    {
+        title: 'Bohemian Rhapsody',
+        director: 'Bryan Singer'
+    },
+    {
+        title: 'Pulp Fiction',
+        director: 'Quentin Tarantino'
+    },
+    {
+        title: 'Wizard of Oz',
+        director: 'Victor Fleming'
+    },
+    {
+        title: 'The Big Lebowski',
+        director: ['Joel Coen', 'Ethan Coen']
+    },
+    {
+        title: 'A Very Long Engagement',
+        director: 'Jean-Pierre Jeunet'
+    },
+    {
+        title: 'The Hunger Games',
+        director: 'Gary Ross'
+    },
+    {
+        title: 'The Matrix',
+        director: ['Lana Wachowski', 'Lilly Wachowski']
+    },
+    {
+        title: 'This is 40',
+        director: 'Judd Apatow'
+    },
+    {
+        title: 'Inception',
+        director: 'Christopher Nolan'
     }
+
+
 ];
 
 app.use(morgan('common'));
