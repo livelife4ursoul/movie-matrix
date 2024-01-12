@@ -1,6 +1,5 @@
-const express = require('express');
-
-const morgan = require('morgan');
+const express = require('express'),
+    morgan = require('morgan');
 
 const app = express();
 
@@ -21,6 +20,11 @@ app.use(express.static('public'));
 
 app.get('/movies', (req, res) => {
     res.json(topMovies);
+});
+
+app.use((err, req, res, next) => {
+    console.error(err.stack);
+    res.status(500).send('Something Broke!');
 });
 
 app.listen(8080, () => {
