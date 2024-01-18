@@ -5,11 +5,161 @@
         <title>documentation</title>
     </head>
     <body>
-        <h1>Movie Matrix API</h1>
-        <h3>Documentation</h3>
+        <h1>Movie Matrix API Documentation</h1>
         <p>The Movie Matrix API will be a database for the server-side of the Movie Matrix web application.
             It will provide information about movies, genres, and directors. Users will be able to create a profile
         for saving their favorite movies. </p>
+
+        <h3>Endpoints Table</h3>
+            <table style = "width: 100%">
+                <tr>
+                    <th>Request Description</th>
+                    <th>Endpoint URL</th>
+                    <th>HTTP Method</th>
+                    <th>Query Parameters</th>
+                    <th>Request Body Data Format</th>
+                    <th>Response Body Data Format</th>
+                </tr>
+                <tr>
+                    <td>Get list of movies</td>
+                    <td>/movies</td>
+                    <td>GET</td>
+                    <td>none</td>
+                    <td>none</td>
+                    <td>An array of JSON objects holding data about all movies in database</td>
+                </tr>
+                <tr>
+                    <td>Get list of movies by director</td>
+                    <td>/movies/directors/[director]</td>
+                    <td>GET</td>
+                    <td>:director</td>
+                    <td>none</td>
+                    <td>An array of JSON Objects holding data about all movies by requested director </td>
+                </tr>
+                <tr>
+                    <td>Get list of movies by genre</td>
+                    <td>/movies/genres/[genre]</td>
+                    <td>GET</td>
+                    <td>:genre</td>
+                    <td>none</td>
+                    <td>An array of JSON Objects holding data about all movies in requested genre</td>
+                </tr>
+                <tr>
+                    <td>Get data about a single movie by title; containing: title, description, director, year released, genre, image URL, featured or not</td>
+                    <td>/movies/[title]</td>
+                    <td>GET</td>
+                    <td>:title</td>
+                    <td>none</td>
+                    <td>A JSON object holding data about a single movie. Example:<br>
+                        <code>
+                            {<br>
+                                movieID: 005,<br>
+                                title: 'Almost Famous',<br>
+                                description: 'A high-school boy in the early 1970s is given...'<br>
+                                director: 'Cameron Crowe',<br>
+                                release: '2000'<br>
+                                genre: ['Adventure', 'Comedy', 'Drama', 'Music'],<br>
+                                imageURL: 'almostFamous.png',<br>
+                            }
+                        </code>
+                    </td>
+                </tr>
+                <tr>
+                    <td>Get data about director by name; containing: bio, birth year, death year</td>
+                    <td>/directors/[director]</td>
+                    <td>GET</td>
+                    <td>:director</td>
+                    <td>none</td>
+                    <td>A JSON Object holding data about a single director. Example: 
+                        <code>
+                            {<br>
+                                directorName: 'Cameron Crowe',<br>
+                                directorBio: 'Certainly idiosyncratic as a writer, Cameron Crowe has created a series of scripts...',<br>
+                                birthYear: '1957',<br>
+                                deathYear: 'null'<br>
+                            }
+                        </code>
+                    </td>
+                </tr>
+                <tr>
+                    <td>Get data about a specific genre by name; containing: genre name, description</td>
+                    <td>/genres/[genre]</td>
+                    <td>GET</td>
+                    <td>:genre</td>
+                    <td>none</td>
+                    <td>A JSON Object holding data about a specific genre. Example:<br> 
+                        <code>
+                            {<br>
+                                genre: 'Comedy',<br>
+                                genreDes: 'A comedy film is a category of film that emphasizes humor...'<br>
+                            }
+                        </code>
+                    </td>
+                </tr>
+                <tr>
+                    <td>Allow new users to register</td>
+                    <td>/users</td>
+                    <td>POST</td>
+                    <td>none</td>
+                    <td>A JSON Object holding data about new registered user. Example:<br> 
+                        <code>
+                            {<br>
+                                registeredName: 'Marco Esquandolas',<br>
+                                userName: 'antelope',<br>
+                                userPassword: 'runrunrun',<br>
+                                userEmail: 'outofcontrol@gmail.com',<br>
+                                userBirthday: '1983-12-02'<br>
+                            }
+                        </code>
+                    </td>
+                    <td>A JSON Object holding data about new registered user including userID. Example:<br> 
+                        <code>
+                            {<br>
+                                userID: '001',<br>
+                                registeredName: 'Marco Esquandolas',<br>
+                                userName: 'antelope',<br>
+                                userPassword: 'runrunrun',<br>
+                                userEmail: 'outofcontrol@gmail.com',<br>
+                                userBirthday: '1983-12-02',<br>
+                                topMovies: []<br>
+                            }
+                        </code>
+                    </td>
+                </tr>
+                <tr>
+                    <td>Allow users to update user info</td>
+                    <td>/users/[userName]</td>
+                    <td>PUT</td>
+                    <td>:userName</td>
+                    <td>none</td>
+                    <td>A text message indicating User info was sucessfully updated</td>
+                </tr>
+                <tr>
+                    <td>Allow users to update favorite movies list</td>
+                    <td>/users/[userName]/topMovies/[movieID]</td>
+                    <td>PUT</td>
+                    <td>:userName, :movieID</td>
+                    <td>none</td>
+                    <td>A text message indicating that the User suscessfully added a movie to their Favorite Movie List.</td>
+                </tr>
+                <tr>
+                    <td>Allow users to remove a movie from their favorite movies list</td>
+                    <td>/users/[userName]/topMovies/[movieID]</td>
+                    <td>DELETE</td>
+                    <td>:userName, :movieID</td>
+                    <td>none</td>
+                    <td>A text message indicating that the User sucessfully removed movie from their Favorite Movie List.</td>
+                </tr>
+                <tr>
+                    <td>Allow existing users to remove account</td>
+                    <td>/users/[userName]</td>
+                    <td>DELETE</td>
+                    <td>:userName</td>
+                    <td>none</td>
+                    <td>A text message indicating the Users Account was sucessfully removed.</td>
+                </tr>
+            </table>
+
         <script type="module" src="index.js"></script>
     </body>
 </html>
