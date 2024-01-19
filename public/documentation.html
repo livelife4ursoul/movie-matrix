@@ -30,7 +30,7 @@
                 </tr>
                 <tr>
                     <td>Get list of movies by director</td>
-                    <td>/movies/directors/[director]</td>
+                    <td>/movies/directors/[director.name]</td>
                     <td>GET</td>
                     <td>:director</td>
                     <td>none</td>
@@ -38,7 +38,7 @@
                 </tr>
                 <tr>
                     <td>Get list of movies by genre</td>
-                    <td>/movies/genres/[genre]</td>
+                    <td>/movies/genres/[genre.name]</td>
                     <td>GET</td>
                     <td>:genre</td>
                     <td>none</td>
@@ -53,7 +53,7 @@
                     <td>A JSON object holding data about a single movie. Example:<br>
                         <code>
                             {<br>
-                                movieID: 005,<br>
+                                _id: 005,<br>
                                 title: 'Almost Famous',<br>
                                 description: 'A high-school boy in the early 1970s is given...'<br>
                                 director: 'Cameron Crowe',<br>
@@ -66,7 +66,7 @@
                 </tr>
                 <tr>
                     <td>Get data about director by name; containing: bio, birth year, death year</td>
-                    <td>/directors/[director]</td>
+                    <td>/directors/[director.name]</td>
                     <td>GET</td>
                     <td>:director</td>
                     <td>none</td>
@@ -83,7 +83,7 @@
                 </tr>
                 <tr>
                     <td>Get data about a specific genre by name; containing: genre name, description</td>
-                    <td>/genres/[genre]</td>
+                    <td>/genres/[genre.name]</td>
                     <td>GET</td>
                     <td>:genre</td>
                     <td>none</td>
@@ -91,7 +91,7 @@
                         <code>
                             {<br>
                                 genre: 'Comedy',<br>
-                                genreDes: 'A comedy film is a category of film that emphasizes humor...'<br>
+                                description: 'A comedy film is a category of film that emphasizes humor...'<br>
                             }
                         </code>
                     </td>
@@ -104,7 +104,7 @@
                     <td>A JSON Object holding data about new registered user. Example:<br> 
                         <code>
                             {<br>
-                                registeredName: 'Marco Esquandolas',<br>
+                                userID: 00678<br>
                                 userName: 'antelope',<br>
                                 userPassword: 'runrunrun',<br>
                                 userEmail: 'outofcontrol@gmail.com',<br>
@@ -128,7 +128,7 @@
                 </tr>
                 <tr>
                     <td>Allow users to update user info</td>
-                    <td>/users/[userName]</td>
+                    <td>/users/[Username]</td>
                     <td>PUT</td>
                     <td>:userName</td>
                     <td>none</td>
