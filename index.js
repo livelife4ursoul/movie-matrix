@@ -199,7 +199,7 @@ app.delete('/users/:Username/TopMovies/:MovieID', async (req, res) => {
 
 //Delete user by Username
 app.delete('/users/:Username', async (req, res) => {
-    await Users.fineOneAndRemove({ Username: req.params.Username })
+    await Users.findOneAndDelete({ Username: req.params.Username })
         .then((user) => {
             if (!user) {
                 res.status(400).send(req.params.Username + ' was not found.');
