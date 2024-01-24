@@ -5,8 +5,10 @@ const Models = require('./models.js');
 const Movies = Models.Movie;
 const Users = Models.User;
 
+mongoose.connect( process.env.CONNECTION_URI);
+
 //MongoDB Connection using Mongoose
-mongoose.connect('mongodb://localhost:27017/matrixDB');
+// mongoose.connect('mongodb://localhost:27017/matrixDB');
 
 const express = require('express'),
     bodyParser = require('body-parser'),
