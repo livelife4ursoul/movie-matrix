@@ -26,7 +26,7 @@ app.use(bodyParser.urlencoded({ extended: true}));
 const cors = require('cors');
 
 //CORS limiting domain access
-let allowedOrigins = ['http://localhost8080', 'http://testsite.com', 'http://localhost8080/documentation.html'];
+let allowedOrigins = ['http://localhost8080', 'http://testsite.com'];
 
 app.use(cors({
     origin: (origin, callback) => {
@@ -272,6 +272,7 @@ app.use((err, req, res, next) => {
     res.status(500).send('Something Broke!');
 });
 
-app.listen(8080, () => {
-    console.log('Your app is listening.');
+const port = process.env.PORT || 8080;
+app.listen(port, '0.0.0.0', () => {
+    console.log('Listening on Port ' + port);
 });
