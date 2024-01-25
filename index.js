@@ -5,7 +5,8 @@ const Models = require('./models.js');
 const Movies = Models.Movie;
 const Users = Models.User;
 
-mongoose.connect( process.env.CONNECTION_URI);
+// mongoose.set('strictQuery', true);
+mongoose.connect(process.env.CONNECTION_URI);
 
 //MongoDB Connection using Mongoose
 // mongoose.connect('mongodb://localhost:27017/matrixDB');
