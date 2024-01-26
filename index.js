@@ -6,10 +6,10 @@ const Movies = Models.Movie;
 const Users = Models.User;
 
 // mongoose.set('strictQuery', true);
-// mongoose.connect(process.env.CONNECTION_URI);
+mongoose.connect(process.env.CONNECTION_URI);
 
 //MongoDB Connection using Mongoose
-mongoose.connect('mongodb://localhost:27017/matrixDB'), { useNewUrlParser: true, useUnifiedTopology: true};
+// mongoose.connect('mongodb://localhost:27017/matrixDB'), { useNewUrlParser: true, useUnifiedTopology: true};
 
 const express = require('express'),
     bodyParser = require('body-parser'),
@@ -180,7 +180,10 @@ app.put('/users/:Username', passport.authenticate('jwt', { session: false }),
         check('Username')
          .isAlphanumeric()
          .withMessage('Username contains non alphanumeric characters - not allowed.'),
-        check('Password').not().isEmpty().withMessage('Password Required'),
+        check('Password')
+        .not()
+        .isEmpty()
+        .withMessage('Password Required'),
         check('Email')
             .optional()
             .isEmail().withMessage('It apears the email you entered is invalid'),
