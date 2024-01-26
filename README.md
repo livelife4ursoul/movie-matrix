@@ -9,7 +9,8 @@ Built to cater to the intricacies of modern movie data management, this API offe
 ## Links
 
 - [GitHub Repository](https://github.com/livelife4ursoul/movie-matrix.git)
-- [API Documentation](https://yourapi.com/documentation)
+- [Movie Matrix API](https://movie-matrix-b7781b74e464.herokuapp.com)
+- [API Documentation](https://movie-matrix-b7781b74e464.herokuapp.com/documentation.html)
 
 ## Features
 
