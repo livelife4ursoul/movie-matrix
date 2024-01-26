@@ -6,10 +6,10 @@ const Movies = Models.Movie;
 const Users = Models.User;
 
 // mongoose.set('strictQuery', true);
-mongoose.connect(process.env.CONNECTION_URI);
+// mongoose.connect(process.env.CONNECTION_URI);
 
 //MongoDB Connection using Mongoose
-// mongoose.connect('mongodb://localhost:27017/matrixDB');
+mongoose.connect('mongodb://localhost:27017/matrixDB'), { useNewUrlParser: true, useUnifiedTopology: true};
 
 const express = require('express'),
     bodyParser = require('body-parser'),
@@ -175,36 +175,44 @@ app.post('/users', [
 });
 
 //Update user's info by Username
-app.put('/users/:Username', [
-    check('Username', 'Username is required').isLength({min: 5}),
-    check('Username', 'Username contains non alphanumeric characters - not allowed.').isAlphanumeric(),
-    check('Password', 'Password is required').not().isEmpty(),
-    check('Email', 'Email does not appead to be valid').isEmail()
-], passport.authenticate('jwt', { session: false }), async (req, res) => {
-    let errors = validationResult(req);
-    if (!errors.isEmpty()) {
-        return res.status(422).json({ errors: error.array() });
-    }
-    if(req.user.Username !== req.params.Username){
-        return res.status(400).send('Permission denied');
-    }
-    await Users.findOneAndUpdate({ Username: req.params.Username }, 
-    { $set:
-        {
-            Username: req.body.Username,
-            Password: req.body.Password,
-            Email: req.body.Email,
-            Birthday: req.body.Birthday
+app.put('/users/:Username', passport.authenticate('jwt', { session: false }), 
+    [
+        check('Username')
+         .isAlphanumeric()
+         .withMessage('Username contains non alphanumeric characters - not allowed.'),
+        check('Password').not().isEmpty().withMessage('Password Required'),
+        check('Email')
+            .optional()
+            .isEmail().withMessage('It apears the email you entered is invalid'),
+    ], 
+    async (req, res) => {
+        let errors = validationResult(req);
+        if (!errors.isEmpty()) {
+            return res.status(422).json({ errors: errors.array() });
         }
-    },
-    { new: true })
-    .then((updatedUser) => {
-        res.json(updatedUser);
-    })
-    .catch((err) => {
-        console.error(err);
-        res.status(500).send('Error: ' + err);
-    });
+        //CONDITION TO CHECK USERNAME HERE
+        if(req.user.Username !== req.params.Username){
+            return res.status(400).send('Permission denied');
+        }
+        //END OF PERMISSION CHECK
+        let hashedPassword = Users.hashPassword(req.body.Password);
+        await Users.findOneAndUpdate({ Username: req.params.Username }, 
+            { $set:
+                {
+                    Username: req.body.Username,
+                    Password: hashedPassword,
+                    Email: req.body.Email,
+                    Birthday: req.body.Birthday
+                }
+            },
+            { new: true })
+            .then((updatedUser) => {
+                res.json(updatedUser);
+            })
+            .catch((err) => {
+                console.error(err);
+                res.status(500).send('Error: ' + err);
+        });
 });
 
 //Add movie to user's TopMovies List

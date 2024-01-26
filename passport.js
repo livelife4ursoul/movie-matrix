@@ -13,8 +13,8 @@ passport.use(
             usernameField: 'Username',
             passwordField: 'Password',
         },
-        async (username, password, callback) => {
-            console.log(`${username} ${password}`);
+        async (username, hashedPassword, callback) => {
+            console.log(`${username} ${hashedPassword}`);
             await Users.findOne({ Username: username })
             .then((user) => {
                 if (!user) {
@@ -23,7 +23,7 @@ passport.use(
                         message: 'Incorrect username or password.',
                     });
                 }
-                if (!user.validatePassword(password)) {
+                if (!user.validatePassword(hashedPassword)) {
                     console.log('incorrect password');
                     return callback(null, false, { message: 'Incorrect password.'});
                 }
