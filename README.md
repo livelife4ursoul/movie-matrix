@@ -29,15 +29,20 @@ single movie by title to the user
 ### Data Operations Enabled by HTTP Requests
 
 - **GET /movies**: Retrieve a list of all movies with extensive filtering options.
-- **GET /movies/:id**: Fetch detailed information about a specific movie using its unique identifier.
-- **POST /movies**: Seamlessly add a new movie to the database with a structured request.
-- **PUT /movies/:id**: Update existing movie details, ensuring accuracy and relevance.
-- **DELETE /movies/:id**: Remove a movie from the database securely.
+- **GET /movies/directors/:directorName**: Lookup movies by a specific director.
+- **GET /movies/genres/:genreName**: Fetch a list of movies in a specifc genre.
+- **GET /movies/:MovieID**: Fetch detailed information about a specific movie by title.
+- **GET /directors/:directorName**: Lookup details about specific direcors.
+- **GET /genres/:genre**: Retrieve information about a specific genre.
+- **PUT /users/:Username**: User may update/change their personal informatiion.
+- **POST users/:Username/movies/:MovieID** Seamlessly add a new movie to the database with a structured request.
+- **DELETE users/:Username/movies/:MovieID**: Remove a movie from the database securely.
+- **DELETE users/:Username**: User can delete their own profile.
 
 ### Authentication and Authorization
 
 - **User Login (HTTP Authentication/JWT Token)**:
-  - **POST /users**: Register a new user with basic HTTP authentication.
+  - **POST /login**: Register a new user with basic HTTP authentication.
   - Credentials sent securely over HTTPS.
   - Hash passwords securely before storing them in the database.
   - Implement secure user login authentication using Passport middleware.
