@@ -29,7 +29,7 @@ app.use(bodyParser.urlencoded({ extended: true}));
 const cors = require('cors');
 
 //CORS limiting domain access
-let allowedOrigins = ['http://localhost8080', 'http:localhost:1234', 'https://livelife4ursoul.github.io'];
+let allowedOrigins = ['http://localhost8080', 'http://testsite.com'];
 
 app.use(cors({
     origin: (origin, callback) => {
@@ -61,9 +61,8 @@ app.get('/', (req, res) => {
 });
 
 //Get all movies
-app.get('/movies', 
-// passport.authenticate('jwt', { session: false }), 
-async (req, res) => {
+app.get('/movies', passport.authenticate('jwt', 
+{ session: false }), async (req, res) => {
     await Movies.find()
         .then((movies) => {
             res.status(201).json(movies);
