@@ -29,7 +29,7 @@ app.use(bodyParser.urlencoded({ extended: true}));
 const cors = require('cors');
 
 //CORS limiting domain access
-let allowedOrigins = ['http://localhost8080', 'http:localhost:1234', 'https://livelife4ursoul.github.io', 'file:///Users/jeales/Desktop/movieMatrix-client/src/index.html'];
+let allowedOrigins = ['http://localhost8080', 'http:localhost:1234', 'https://livelife4ursoul.github.io'];
 
 app.use(cors({
     origin: (origin, callback) => {
