@@ -29,7 +29,7 @@ app.use(bodyParser.urlencoded({ extended: true}));
 const cors = require('cors');
 
 //CORS limiting domain access
-let allowedOrigins = ['http://localhost8080', 'http://testsite.com'];
+let allowedOrigins = ['http://localhost:8080', 'http://localhost:1234'];
 
 app.use(cors({
     origin: (origin, callback) => {
