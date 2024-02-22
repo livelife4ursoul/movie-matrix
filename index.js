@@ -195,9 +195,9 @@ app.put('/users/:Username', passport.authenticate('jwt', { session: false }),
             return res.status(422).json({ errors: errors.array() });
         }
         //CONDITION TO CHECK USERNAME HERE
-        if(req.user.Username !== req.params.Username){
-            return res.status(400).send('Permission denied');
-        }
+        // if(req.user.Username !== req.params.Username){
+        //     return res.status(400).send('Permission denied');
+        // }
         //END OF PERMISSION CHECK
 
         let unalteredData = Users.findOne({ Username: req.params.Username });
@@ -294,3 +294,22 @@ const port = process.env.PORT || 8080;
 app.listen(port, '0.0.0.0', () => {
     console.log('Listening on Port ' + port);
 });
+
+// let hashedPassword = Users.hashPassword(req.body.Password);
+//         await Users.findOneAndUpdate({ Username: req.params.Username }, 
+//             { $set:
+//                 {
+//                     Username: req.body.Username || unalteredData.Username,
+//                     Password: hashedPassword,
+//                     Email: req.body.Email || unalteredData.Email,
+//                     Birthday: req.body.Birthday || unalteredData.Birthday
+//                 }
+//             },
+//             { new: true })
+//             .then((updatedUser) => {
+//                 res.json(updatedUser);
+//             })
+//             .catch((err) => {
+//                 console.error(err);
+//                 res.status(500).send('Error: ' + err);
+//         });
