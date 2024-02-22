@@ -181,10 +181,10 @@ app.put('/users/:Username', passport.authenticate('jwt', { session: false }),
         check('Username')
          .isAlphanumeric()
          .withMessage('Username contains non alphanumeric characters - not allowed.'),
-        check('Password')
-        .not()
-        .isEmpty()
-        .withMessage('Password Required'),
+        check('Password', 'Password Required'),
+        // .not()
+        // .isEmpty()
+        // .withMessage('Password Required'),
         check('Email')
             .optional()
             .isEmail().withMessage('It apears the email you entered is invalid'),
@@ -199,14 +199,17 @@ app.put('/users/:Username', passport.authenticate('jwt', { session: false }),
             return res.status(400).send('Permission denied');
         }
         //END OF PERMISSION CHECK
+
+        let unalteredData = Users.findOne({ Username: req.params.Username });
+
         let hashedPassword = Users.hashPassword(req.body.Password);
         await Users.findOneAndUpdate({ Username: req.params.Username }, 
             { $set:
                 {
-                    Username: req.body.Username,
+                    Username: req.body.Username || unalteredData.Username,
                     Password: hashedPassword,
-                    Email: req.body.Email,
-                    Birthday: req.body.Birthday
+                    Email: req.body.Email || unalteredData.Email,
+                    Birthday: req.body.Birthday || unalteredData.Birthday
                 }
             },
             { new: true })
