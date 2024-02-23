@@ -179,9 +179,11 @@ app.post('/users', [
 app.put('/users/:Username', passport.authenticate('jwt', { session: false }), 
     [
         check('Username')
-         .isAlphanumeric()
-         .withMessage('Username contains non alphanumeric characters - not allowed.'),
-        check('Password', 'Password Required'),
+            .optional()
+            .isAlphanumeric()
+            .withMessage('Username contains non alphanumeric characters - not allowed.'),
+        check('Password')
+            .optional(),
         // .not()
         // .isEmpty()
         // .withMessage('Password Required'),
@@ -202,7 +204,7 @@ app.put('/users/:Username', passport.authenticate('jwt', { session: false }),
 
         let unalteredData = Users.findOne({ Username: req.params.Username });
 
-        let hashedPassword = Users.hashPassword(req.body.Password);
+        let hashedPassword = req.body.Password? Users.hashPassword(req.body.Password) : Users.findOne({ Username: req.params.Username}).Password;
         await Users.findOneAndUpdate({ Username: req.params.Username }, 
             { $set:
                 {
@@ -313,3 +315,52 @@ app.listen(port, '0.0.0.0', () => {
 //                 console.error(err);
 //                 res.status(500).send('Error: ' + err);
 //         });
+
+//Update user's info by Username
+// app.put('/users/:Username', passport.authenticate('jwt', { session: false }), 
+//     [
+//         check('Username')
+//             .optional()
+//             .isAlphanumeric()
+//             .withMessage('Username contains non alphanumeric characters - not allowed.'),
+//         check('Password')
+//             .optional(),
+//         // .not()
+//         // .isEmpty()
+//         // .withMessage('Password Required'),
+//         check('Email')
+//             .optional()
+//             .isEmail().withMessage('It apears the email you entered is invalid'),
+//     ], 
+//     async (req, res) => {
+//         let errors = validationResult(req);
+//         if (!errors.isEmpty()) {
+//             return res.status(422).json({ errors: errors.array() });
+//         }
+//         //CONDITION TO CHECK USERNAME HERE
+//         // if(req.user.Username !== req.params.Username){
+//         //     return res.status(400).send('Permission denied');
+//         // }
+//         //END OF PERMISSION CHECK
+
+//         let unalteredData = Users.findOne({ Username: req.params.Username });
+
+//         let hashedPassword = Users.hashPassword(req.body.Password);
+//         await Users.findOneAndUpdate({ Username: req.params.Username }, 
+//             { $set:
+//                 {
+//                     Username: req.body.Username || unalteredData.Username,
+//                     Password: hashedPassword,
+//                     Email: req.body.Email || unalteredData.Email,
+//                     Birthday: req.body.Birthday || unalteredData.Birthday
+//                 }
+//             },
+//             { new: true })
+//             .then((updatedUser) => {
+//                 res.json(updatedUser);
+//             })
+//             .catch((err) => {
+//                 console.error(err);
+//                 res.status(500).send('Error: ' + err);
+//         });
+// });
