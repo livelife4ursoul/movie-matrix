@@ -177,18 +177,18 @@ app.post('/users', [
 
 //Update user's info by Username
 app.put('/users/:Username', passport.authenticate('jwt', { session: false }), 
-    // [
-    //     check('Username')
-    //      .isAlphanumeric()
-    //      .withMessage('Username contains non alphanumeric characters - not allowed.'),
-    //     check('Password', 'Password Required'),
-    //     // .not()
-    //     // .isEmpty()
-    //     // .withMessage('Password Required'),
-    //     check('Email')
-    //         .optional()
-    //         .isEmail().withMessage('It apears the email you entered is invalid'),
-    // ], 
+    [
+        check('Username')
+         .isAlphanumeric()
+         .withMessage('Username contains non alphanumeric characters - not allowed.'),
+        check('Password', 'Password Required'),
+        // .not()
+        // .isEmpty()
+        // .withMessage('Password Required'),
+        check('Email')
+            .optional()
+            .isEmail().withMessage('It apears the email you entered is invalid'),
+    ], 
     async (req, res) => {
         let errors = validationResult(req);
         if (!errors.isEmpty()) {
