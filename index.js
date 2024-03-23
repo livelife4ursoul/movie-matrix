@@ -180,14 +180,18 @@ app.put('/users/:Username', passport.authenticate('jwt', { session: false }),
     [
         check('Username')
          .isAlphanumeric()
-         .withMessage('Username contains non alphanumeric characters - not allowed.'),
-        check('Password', 'Password Required'),
+         .withMessage('Username contains non alphanumeric characters - not allowed.')
+         .optional(),
+        check('Password', 'Password Required')
+        .optional(),
         // .not()
         // .isEmpty()
         // .withMessage('Password Required'),
         check('Email')
             .optional()
             .isEmail().withMessage('It apears the email you entered is invalid'),
+        check('Birthday')
+         .optional()
     ], 
     async (req, res) => {
         let errors = validationResult(req);
@@ -202,7 +206,7 @@ app.put('/users/:Username', passport.authenticate('jwt', { session: false }),
 
         let unalteredData = Users.findOne({ Username: req.params.Username });
 
-        let hashedPassword = Users.hashPassword(req.body.Password);
+        let hashedPassword = req.body.Password ? Users.hashPassword(req.body.Password) : unalteredData.Password;
         await Users.findOneAndUpdate({ Username: req.params.Username }, 
             { $set:
                 {
