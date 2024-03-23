@@ -23,7 +23,7 @@ app.use(morgan('common'));
 //Middleware for parsing requests
 app.use(express.json());
 app.use(express.urlencoded({ extended: true}));
-app.use(bodyParser.urlencoded({ extended: true}));
+// app.use(bodyParser.urlencoded({ extended: true}));
 
 //CORS Enabled
 const cors = require('cors');
