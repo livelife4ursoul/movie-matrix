@@ -29,7 +29,7 @@ app.use(express.urlencoded({ extended: true}));
 const cors = require('cors');
 
 //CORS limiting domain access
-let allowedOrigins = ['http://localhost:8080', 'http://localhost:1234', 'http://https://git.heroku.com/movie-matrix.git', 'https://movie-matrix-b7781b74e464.herokuapp.com'];
+let allowedOrigins = ['http://localhost:8080', 'http://localhost:1234', 'http://https://git.heroku.com/movie-matrix.git', 'https://movie-matrix-b7781b74e464.herokuapp.com/'];
 
 app.use(cors({
     origin: (origin, callback) => {
