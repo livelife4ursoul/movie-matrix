@@ -206,10 +206,10 @@ app.put('/users/:Username', passport.authenticate('jwt', { session: false }),
         await Users.findOneAndUpdate({ Username: req.params.Username }, 
             { $set:
                 {
-                    Username: Username || unalteredData.Username,
+                    Username: req.body.Username || unalteredData.Username,
                     Password: hashedPassword,
-                    Email: Email || unalteredData.Email,
-                    Birthday: Birthday || unalteredData.Birthday
+                    Email: req.body.Email || unalteredData.Email,
+                    Birthday: req.body.Birthday || unalteredData.Birthday
                 }
             },
             { new: true })
